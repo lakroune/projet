@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Formulaire Animal (Ajout/Modification) amélioré</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#3A5A40",
+            "background-light": "#f6f8f6",
+            "background-dark": "#102216",
+            "primary-light": "#DAD2BC",
+            "primary-dark": "#2a3d2e",
+            "text-light": "#333333",
+            "text-dark": "#e0e0e0",
+            "accent": "#F9A826"
+          },
+          fontFamily: {
+            "display": ["Lexend", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.5em 1.5em;
+      background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB8CzvyKE2bbSs_08FBBXqvgEXYnLgEdxCNG1erkatbi19C9TpPMdJsIb1biiWExbgzytNNaJ_SqMWUZ2oUnWIZYVy9QY2uK03zwMtiix4y6VmkrjncENAPHmktRswIRA6Rks6ryOn1WX-J8GJ3kiZVIUDjgLkJ9EV3QyHyYnHrLYsNggQcR3vKg057jzZWRp3KAf_RK3ra_1w0aA4iY9H5wdceYG2e1IsJnvpVRtcehQTdJDCcZyysOLrIfTpV1Ht0V0UYlDtg8rc)
+    }
+
+    .dark select {
+      background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB8CzvyKE2bbSs_08FBBXqvgEXYnLgEdxCNG1erkatbi19C9TpPMdJsIb1biiWExbgzytNNaJ_SqMWUZ2oUnWIZYVy9QY2uK03zwMtiix4y6VmkrjncENAPHmktRswIRA6Rks6ryOn1WX-J8GJ3kiZVIUDjgLkJ9EV3QyHyYnHrLYsNggQcR3vKg057jzZWRp3KAf_RK3ra_1w0aA4iY9H5wdceYG2e1IsJnvpVRtcehQTdJDCcZyysOLrIfTpV1Ht0V0UYlDtg8rc)
+    }
+  </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+  <div class="flex min-h-screen">
+    <aside
+      class="flex h-screen w-64 flex-col justify-between border-r border-border-light bg-foreground-light p-4 dark:border-border-dark dark:bg-foreground-dark sticky top-0">
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center gap-3 px-1 py-2">
+          <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Logo du Zoo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0Lg1OEXJcVVLNu-F6WdrhKg3x_oITAykEs4sv1tonbmxNuSYelzNpbTz0uZeDE9pn5C1fVmaHtkBsSZswb9MqE4bPkadWEdAXoShGf6e9VFYxd2HUxueX0eXHhOxmEmwV81zxkOeXGuTh_FHL-eM-5x7tof3w167DposoHSNPe5IY9s-L-g1NpZN-optSF_VH8WfQOdshKb6i8QxLM0StObMwydCAiXrkhFc1W8izSSSn34g7N28pr0md3jJqxSnH434lfcrFMF8");'>
+          </div>
+          <div class="flex flex-col">
+            <h1 class="text-base font-medium leading-normal text-text-light-primary dark:text-text-dark-primary">
+              Zoo Manager</h1>
+            <p class="text-sm font-normal leading-normal text-text-light-secondary dark:text-text-dark-secondary">
+              Application de Gestion</p>
+          </div>
+        </div>
+        <nav class="mt-4 flex flex-col gap-1">
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="#">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark"
+              style="font-variation-settings: 'FILL' 1;">dashboard</span>
+            <span class="text-sm font-semibold leading-normal text-text-light dark:text-text-dark">Tableau
+              de bord</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-primary/20 dark:bg-primary/30" href="#">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">pets</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
+              animaux</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="#">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">eco</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Gestion des
+              habitats</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="#">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">bar_chart</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Statistiques</span>
+          </a>
+          <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20"
+            href="#">
+            <span class="material-symbols-outlined text-text-light dark:text-text-dark">joystick</span>
+            <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Jeu
+              animalier</span>
+          </a>
+        </nav>
+      </div>
+      <div class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary/10 dark:hover:bg-primary/20" href="#">
+          <span class="material-symbols-outlined text-text-light dark:text-text-dark">settings</span>
+          <span class="text-sm font-medium leading-normal text-text-light dark:text-text-dark">Paramètres</span>
+        </a>
+      </div>
+    </aside>
+   
+  </div>
+
+</body>
+
+</html>
