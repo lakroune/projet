@@ -1,22 +1,17 @@
-<?php
-session_start();
-$_SESSION['user_role']="admin";
-// --- Inclusion du fichier de connexion à la base de données (à décommenter)
-// include "../db_connect.php"; 
+ <?php
+    session_start();
+    $_SESSION['role_utilisateur'] = "admin";
+    include "../db_connect.php";
 
-// 1. Vérification stricte des variables de session pour l'accès guide
-if (
-    isset($_SESSION['user_role'], $_SESSION['logged_in'], $_SESSION['user_id'], $_SESSION['user_name']) &&
-    $_SESSION['user_role'] === "admin" &&
-    $_SESSION['logged_in'] === TRUE
-) {
-    // Extraction des données de session
-    $id_utilisateur = htmlspecialchars($_SESSION['user_id']);
-    $nom_utilisateur = htmlspecialchars($_SESSION['user_name']);
-    $role_utilisateur = htmlspecialchars($_SESSION['user_role']);
-    
-    // 2. SIMULATION DES DONNÉES DU TABLEAU DE BORD (Remplacer par l'appel à la base de données)
-    
+    if (
+        isset($_SESSION['role_utilisateur'], $_SESSION['logged_in'], $_SESSION['id_utilisateur'], $_SESSION['nom_utilisateur']) &&
+        $_SESSION['role_utilisateur'] === "admin" &&
+        $_SESSION['logged_in'] === TRUE
+    ) {
+        $id_utilisateur = htmlspecialchars($_SESSION['id_utilisateur']);
+        $nom_utilisateur = htmlspecialchars($_SESSION['nom_utilisateur']);
+        $role_utilisateur = htmlspecialchars($_SESSION['role_utilisateur']);
+
      
      
 } else {
@@ -142,8 +137,7 @@ if (
             <div class="px-6 py-5 max-w-7xl mx-auto w-full">
                 <div class="flex flex-wrap justify-between items-end gap-4">
                     <div class="flex flex-col gap-1">
-                        <h1 class="text-3xl font-black tracking-tight text-text-light dark:text-text-dark">Gestion
-                            Complète</h1>
+                        <h1 class="text-3xl font-black tracking-tight text-text-light dark:text-text-dark">Admin</h1>
                         <p
                             class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium flex items-center gap-1">
                             Zoo Virtuel ASSAD
@@ -152,18 +146,7 @@ if (
                                 class="text-xs uppercase tracking-wider bg-primary/10 text-primary px-2 py-0.5 rounded-full">Administration</span>
                         </p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <button
-                            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-sm font-medium shadow-sm">
-                            <span class="material-symbols-outlined text-lg">download</span>
-                            Rapport Stats
-                        </button>
-                        <button
-                            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark text-white shadow-lg shadow-primary/30 transition-all text-sm font-bold">
-                            <span class="material-symbols-outlined text-lg">add</span>
-                            Ajouter Animal
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
         </header>
@@ -238,324 +221,10 @@ if (
                         </div>
                     </div>
                 </section>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2 flex flex-col gap-4">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-lg font-bold text-text-light dark:text-text-dark flex items-center gap-2">
-                                <span class="material-symbols-outlined text-primary">pets</span>
-                                Gestion des Animaux
-                            </h2>
-                            <div class="flex gap-2">
-                                <div class="relative">
-                                    <span
-                                        class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">search</span>
-                                    <input
-                                        class="pl-8 pr-3 py-1.5 rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-surface-dark text-sm w-48 focus:ring-primary/20 focus:border-primary"
-                                        placeholder="Rechercher..." type="text" />
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-                            <table class="w-full text-left text-sm whitespace-nowrap">
-                                <thead
-                                    class="bg-gray-50/50 dark:bg-gray-800/30 border-b border-gray-100 dark:border-gray-800">
-                                    <tr>
-                                        <th
-                                            class="px-4 py-3 font-semibold text-text-secondary-light dark:text-text-secondary-dark">
-                                            Animal</th>
-                                        <th
-                                            class="px-4 py-3 font-semibold text-text-secondary-light dark:text-text-secondary-dark">
-                                            Habitat</th>
-                                        <th
-                                            class="px-4 py-3 font-semibold text-text-secondary-light dark:text-text-secondary-dark">
-                                            Statut</th>
-                                        <th
-                                            class="px-4 py-3 font-semibold text-text-secondary-light dark:text-text-secondary-dark text-right">
-                                            Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                                    <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors group">
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center gap-3">
-                                                <div class="h-10 w-10 rounded-lg overflow-hidden bg-gray-100">
-                                                    <img alt="Lion" class="h-full w-full object-cover"
-                                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJY0sUzzqArndcOV74CjM1PKtLHijHXSzAflwCuQrNFOQDFJy51wtt3idcBDCwkapEd3GqsZXtYc6WfmthdUvMFh2m2sfheT8k8vhob-6Lpj8Urt9aWyWYLXMtY-tDfhJVfnJuImKoMOe1BaB3Ia1jRpO1nsqT5A0NDCVReBnFSQV_ohY-3u0lW6BPtwa7DVoYxw-HwVCEgi1SMLFgXQL9iocd5NkNddZgouuJ7-DggivGipudm97CqG-fEQ96F0auQOFwsZyJltl3" />
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-bold text-text-light dark:text-text-dark">Atlas
-                                                        (Lion)</span>
-                                                    <span class="text-xs text-text-secondary-light">ID: #AN-001</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <span
-                                                class="inline-flex items-center gap-1 text-xs font-medium text-orange-700 bg-orange-50 dark:text-orange-300 dark:bg-orange-900/20 px-2 py-1 rounded-full border border-orange-100 dark:border-orange-800">
-                                                <span class="material-symbols-outlined text-[10px]">landscape</span>
-                                                Savane
-                                            </span>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <span class="w-2 h-2 rounded-full bg-green-500 inline-block mr-1"></span>
-                                            <span class="text-xs text-gray-500">Visible</span>
-                                        </td>
-                                        <td class="px-4 py-3 text-right">
-                                            <div
-                                                class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button
-                                                    class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
-                                                    title="Éditer">
-                                                    <span class="material-symbols-outlined text-lg">edit</span>
-                                                </button>
-                                                <button
-                                                    class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-red-500"
-                                                    title="Supprimer">
-                                                    <span class="material-symbols-outlined text-lg">delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors group">
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center gap-3">
-                                                <div class="h-10 w-10 rounded-lg overflow-hidden bg-gray-100">
-                                                    <img alt="Girafe" class="h-full w-full object-cover"
-                                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5PfXP7NWMJGeLTZ7dOiY93z82RMonB-NRhOEzuKkzMORcVziuyktUi1cEtb_FbFGMMCn5oyNum0_pV-fZj0e-Z5YLmhzCYn6OC_Oq2GELyZr2XyqTsMQkQbAetMOSyrVN2C7NXM1vSx3wlgKkW32Z6g6EwFpWN4b118SpmErrqj86nBmWZHKxXaGh6cX0kit9pAvvevamGeXthxIQggGmFYcDz3-T8E5Cjha2-8W1yQYBXN81yVHMdTHvH3NLErpQljw0gnC5G_Np" />
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-bold text-text-light dark:text-text-dark">Zara
-                                                        (Girafe)</span>
-                                                    <span class="text-xs text-text-secondary-light">ID: #AN-004</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <span
-                                                class="inline-flex items-center gap-1 text-xs font-medium text-orange-700 bg-orange-50 dark:text-orange-300 dark:bg-orange-900/20 px-2 py-1 rounded-full border border-orange-100 dark:border-orange-800">
-                                                <span class="material-symbols-outlined text-[10px]">landscape</span>
-                                                Savane
-                                            </span>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <span class="w-2 h-2 rounded-full bg-green-500 inline-block mr-1"></span>
-                                            <span class="text-xs text-gray-500">Visible</span>
-                                        </td>
-                                        <td class="px-4 py-3 text-right">
-                                            <div
-                                                class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button
-                                                    class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
-                                                    title="Éditer">
-                                                    <span class="material-symbols-outlined text-lg">edit</span>
-                                                </button>
-                                                <button
-                                                    class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-red-500"
-                                                    title="Supprimer">
-                                                    <span class="material-symbols-outlined text-lg">delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors group">
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center gap-3">
-                                                <div class="h-10 w-10 rounded-lg overflow-hidden bg-gray-100">
-                                                    <img alt="Elephant" class="h-full w-full object-cover"
-                                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqnwIOVcrxw9opxYLP8GrKFkVdleTGySKya6_Zq8GgG8lBfdv1TB9UHpQcdQDvsJ919khAGMZg20rOc79ro0qKdl2K96KDRqPwW40omK47wDdObumCsz7ocsN3sCmfEyRZkpoNnOgknWp9QDpUCEXZJ7badeymv6PBzvaMn73x6JleH_4xSDGXc6PLgQoGoF-gquBafhCC0jjEyPyZIjtLKvK3jSwAvQe7LHTSjFTvnHAzWeFOvLS0UrKtDEztx_VTC4Yell-vHIxn" />
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <span class="font-bold text-text-light dark:text-text-dark">Kibo
-                                                        (Éléphant)</span>
-                                                    <span class="text-xs text-text-secondary-light">ID: #AN-012</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <span
-                                                class="inline-flex items-center gap-1 text-xs font-medium text-green-700 bg-green-50 dark:text-green-300 dark:bg-green-900/20 px-2 py-1 rounded-full border border-green-100 dark:border-green-800">
-                                                <span class="material-symbols-outlined text-[10px]">forest</span> Jungle
-                                            </span>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <span class="w-2 h-2 rounded-full bg-yellow-500 inline-block mr-1"></span>
-                                            <span class="text-xs text-gray-500">Soin</span>
-                                        </td>
-                                        <td class="px-4 py-3 text-right">
-                                            <div
-                                                class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button
-                                                    class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
-                                                    title="Éditer">
-                                                    <span class="material-symbols-outlined text-lg">edit</span>
-                                                </button>
-                                                <button
-                                                    class="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-red-500"
-                                                    title="Supprimer">
-                                                    <span class="material-symbols-outlined text-lg">delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="p-3 border-t border-gray-100 dark:border-gray-800 flex justify-center">
-                                <button
-                                    class="text-xs font-medium text-primary hover:text-primary-dark transition-colors flex items-center gap-1">
-                                    Voir tous les animaux <span
-                                        class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-lg font-bold text-text-light dark:text-text-dark flex items-center gap-2">
-                                <span class="material-symbols-outlined text-primary">nature</span>
-                                Habitats
-                            </h2>
-                            <button class="text-primary hover:bg-primary/10 p-1 rounded transition-colors"
-                                title="Ajouter Habitat">
-                                <span class="material-symbols-outlined">add_circle</span>
-                            </button>
-                        </div>
-                        <div class="space-y-3">
-                            <div
-                                class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-3 relative group overflow-hidden">
-                                <div class="h-16 w-16 rounded-lg bg-cover bg-center shrink-0"
-                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAxMVH3eJb1uCHblKIXzTUM4M5iIKU--dxj3iebi1fvi_B4V0rWBd23r92qDTRLErz0tcvcPCtxmazclQ0oLE8skzqhdlcX7rRPQ_ib-nh82KvhfEuK7uyt_YkMr0gazfqmLxHz8Z1ejZNFVjOmgeLuoLGGlRuJXntDnAfrgz6QNDbY2jVaCIT0Ga2TJJo6FFeFQ5vekZy9hbnf99KbHHQd3hkgrooebjpa-Aw0nrLoHIs8AVx5tyJRQQ34jlJch37ZpsyIdZW9WkvW');">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-text-light dark:text-text-dark truncate">Savane Africaine
-                                    </h4>
-                                    <p class="text-xs text-text-secondary-light truncate">15 animaux • Capacité 80%</p>
-                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-2">
-                                        <div class="bg-orange-500 h-1.5 rounded-full" style="width: 80%"></div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="absolute right-2 top-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 dark:bg-black/50 p-1 rounded backdrop-blur-sm">
-                                    <button class="text-blue-600 hover:text-blue-800"><span
-                                            class="material-symbols-outlined text-base">edit</span></button>
-                                    <button class="text-red-500 hover:text-red-700"><span
-                                            class="material-symbols-outlined text-base">delete</span></button>
-                                </div>
-                            </div>
-                            <div
-                                class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-3 relative group overflow-hidden">
-                                <div class="h-16 w-16 rounded-lg bg-cover bg-center shrink-0"
-                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCiLVSlUUwvLJiFpIGD2luPhStZOY-ntf4I351sTojFr8EJ4OhIWsl84kAhHMPpMCK_93QjoeAiVzOJd4RzPo9SMR8W9SKHmWXJBLkzYkZtztYsNtPqL6ngOULkafx9vhSmJ3mAmDnbcFKyoZS1FifXS7_qHUl5RREN-GCcvi71S_HIC2y8OhxCxAEG7R3YETrn9TiazPVRO_EzFm7WQnd85EvAg6Q1G4V58EdysBL95Ev7qAGmXTEJOCiLJTjaKhc676MvBMw4rTZx');">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-text-light dark:text-text-dark truncate">Grande Jungle
-                                    </h4>
-                                    <p class="text-xs text-text-secondary-light truncate">8 animaux • Capacité 45%</p>
-                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-2">
-                                        <div class="bg-green-600 h-1.5 rounded-full" style="width: 45%"></div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="absolute right-2 top-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 dark:bg-black/50 p-1 rounded backdrop-blur-sm">
-                                    <button class="text-blue-600 hover:text-blue-800"><span
-                                            class="material-symbols-outlined text-base">edit</span></button>
-                                    <button class="text-red-500 hover:text-red-700"><span
-                                            class="material-symbols-outlined text-base">delete</span></button>
-                                </div>
-                            </div>
-                            <div
-                                class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex items-center gap-3 relative group overflow-hidden">
-                                <div class="h-16 w-16 rounded-lg bg-cover bg-center shrink-0"
-                                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBOYhxYQ2U3jwcjD-CNrbW9ARMNld-7vD7xD4ks9CzBMnX3d_wiZ5eqUa_NJTYXft1TP3JBas5h470-C5p76cxqVfLzv65WuuilTNXVGCh-xqs4WKKjBRnLet5dr5XgLN0_gCIBbhD6WF7cjTtw4BlcqCl5liZY_MOPCCyDrtx_YIB0v6EkZuoUE0X7ldI6rNhA0k7_XHE8NhBmtBD9yyhQUL9Ptc2XVcVlBhhYsRSQyvG6bG01VWE-5NUI1ap_wiJnJRu593dS29t8');">
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-text-light dark:text-text-dark truncate">Marais Mystique
-                                    </h4>
-                                    <p class="text-xs text-text-secondary-light truncate">5 animaux • Capacité 30%</p>
-                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-2">
-                                        <div class="bg-blue-500 h-1.5 rounded-full" style="width: 30%"></div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="absolute right-2 top-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 dark:bg-black/50 p-1 rounded backdrop-blur-sm">
-                                    <button class="text-blue-600 hover:text-blue-800"><span
-                                            class="material-symbols-outlined text-base">edit</span></button>
-                                    <button class="text-red-500 hover:text-red-700"><span
-                                            class="material-symbols-outlined text-base">delete</span></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <section
-                    class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-                    <div class="p-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
-                        <h2 class="text-lg font-bold text-text-light dark:text-text-dark">Inscriptions Récentes</h2>
-                        <a class="text-xs font-medium text-primary hover:underline" href="#">Voir tout</a>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm whitespace-nowrap">
-                            <thead class="bg-gray-50/50 dark:bg-gray-800/30">
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 font-semibold text-text-secondary-light dark:text-text-secondary-dark">
-                                        Utilisateur</th>
-                                    <th
-                                        class="px-6 py-3 font-semibold text-text-secondary-light dark:text-text-secondary-dark">
-                                        Pays</th>
-                                    <th
-                                        class="px-6 py-3 font-semibold text-text-secondary-light dark:text-text-secondary-dark">
-                                        Date</th>
-                                    <th
-                                        class="px-6 py-3 font-semibold text-text-secondary-light dark:text-text-secondary-dark text-right">
-                                        Statut</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                                <tr>
-                                    <td class="px-6 py-3">
-                                        <div class="flex items-center gap-3">
-                                            <div
-                                                class="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold border border-purple-200 text-xs">
-                                                SM
-                                            </div>
-                                            <span class="font-medium text-text-light dark:text-text-dark">Sarah
-                                                M.</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 text-text-secondary-light">Maroc 🇲🇦</td>
-                                    <td class="px-6 py-3 text-text-secondary-light">Aujourd'hui, 10:23</td>
-                                    <td class="px-6 py-3 text-right">
-                                        <span
-                                            class="inline-flex items-center gap-1.5 text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded">Actif</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-3">
-                                        <div class="flex items-center gap-3">
-                                            <div
-                                                class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold border border-blue-200 text-xs">
-                                                JL
-                                            </div>
-                                            <span class="font-medium text-text-light dark:text-text-dark">Jean L.</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 text-text-secondary-light">France 🇫🇷</td>
-                                    <td class="px-6 py-3 text-text-secondary-light">Hier, 18:45</td>
-                                    <td class="px-6 py-3 text-right">
-                                        <span
-                                            class="inline-flex items-center gap-1.5 text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded">Actif</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+              
+               
             </div>
-            <div class="pb-6 text-center">
-                <p class="text-[10px] text-gray-300 uppercase tracking-[0.2em] font-bold">Inspiré par la force des Lions
-                    de l'Atlas</p>
-            </div>
+            
         </div>
     </main>
 

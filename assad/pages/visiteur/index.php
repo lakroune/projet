@@ -145,7 +145,7 @@ if (
                         <div class="p-4 flex-grow">
                             <h3 class="text-xl font-bold text-[#1b140d]"><?= htmlspecialchars($animal['nom_animal']) ?></h3>
                             <p class="text-gray-500 text-sm mb-3">Découvrez son habitat et son statut de conservation.</p>
-                            <a href="animaux.php" class="text-primary text-sm font-bold hover:underline">
+                            <a href="animal_detail.php?id=<?= htmlspecialchars($animal['id_animal']) ?>" class="text-primary text-sm font-bold hover:underline">
                                 Voir la fiche complète &rarr;
                             </a>
                         </div>
@@ -160,34 +160,7 @@ if (
             </div>
         </section>
 
-        <section class="w-full max-w-[1200px] px-4 md:px-10 py-10 bg-primary/10 rounded-xl mb-12">
-            <h2 class="text-3xl font-extrabold text-[#1b140d] mb-4 text-center">Visites Guidées en Direct</h2>
-            <p class="text-center text-gray-700 mb-8">Réservez votre place pour nos sessions de découverte exclusives.</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-5 bg-white rounded-xl shadow-lg border border-[#f3ede7] text-center">
-                    <span class="material-symbols-outlined text-4xl text-green-600 mb-2">schedule</span>
-                    <h3 class="font-bold text-lg">Prochaine Session :</h3>
-                    <p class="text-primary font-bold">Le Grand Safari (20/12)</p>
-                </div>
-                <div class="p-5 bg-white rounded-xl shadow-lg border border-[#f3ede7] text-center">
-                    <span class="material-symbols-outlined text-4xl text-blue-600 mb-2">person</span>
-                    <h3 class="font-bold text-lg">Guide du Jour :</h3>
-                    <p class="text-primary font-bold">Yasmine Belkadi</p>
-                </div>
-                <div class="p-5 bg-white rounded-xl shadow-lg border border-[#f3ede7] text-center">
-                    <span class="material-symbols-outlined text-4xl text-orange-600 mb-2">paid</span>
-                    <h3 class="font-bold text-lg">Prix d'entrée :</h3>
-                    <p class="text-primary font-bold">À partir de 4€</p>
-                </div>
-            </div>
-            <div class="text-center mt-8">
-                <a href="reservation.php"
-                    class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-orange-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/30">
-                    <span class="material-symbols-outlined">confirmation_number</span>
-                    Voir toutes les visites & Réserver
-                </a>
-            </div>
-        </section>
+     
 
     </main>
 

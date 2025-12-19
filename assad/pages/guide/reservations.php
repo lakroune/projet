@@ -17,17 +17,16 @@ if (
     $id_utilisateur = htmlspecialchars($_SESSION['id_utilisateur']);
     $nom_utilisateur = htmlspecialchars($_SESSION['nom_utilisateur']);
     $role_utilisateur = htmlspecialchars($_SESSION['role_utilisateur']);
-    // 2. SIMULATION DE DONNÉES DE RÉSERVATION (Remplacer par l'appel à la base de données)
 
 
 
-    $sql = " select * from  utilisateurs u inner join  reservations r on  r.id_utilisateur = u.id_utilisateur  inner join visitesguidees v  on v.id_guide =$id_utilisateur";
+    $sql = " select * from  utilisateurs u inner join  reservations r on  r.id_utilisateur = u.id_utilisateur inner join  visitesguidees v on v.id_visite=r.id_visite ";
     $resultat = $conn->query($sql);
     $array_participants = array();
     while ($ligne =  $resultat->fetch_assoc())
         array_push($array_participants, $ligne);
 } else {
-   
+
     header("Location: connexion.php?error=access_denied");
     exit();
 }
@@ -151,25 +150,7 @@ if (
 
                 <div class="flex flex-col">
                     <div class="flex border-b border-border-light dark:border-border-dark gap-6 overflow-x-auto">
-                        <?php
-                        $tabs = [
-                            'upcoming' => ['label' => 'À Venir', 'icon' => 'schedule'],
-                            'past' => ['label' => 'Passées', 'icon' => 'done_all'],
-                        ];
 
-                        foreach ($tabs as $key => $tab) :
-                            $is_active = $active_tab === $key;
-                            $tab_class = $is_active
-                                ? 'border-primary text-primary font-bold'
-                                : 'border-transparent text-text-sec-light dark:text-text-sec-dark hover:border-border-light dark:hover:border-border-dark hover:text-text-main-light dark:hover:text-text-main-dark font-medium';
-                            $count = $tab_counts[$key] ?? 0;
-                        ?>
-                            <a href="?tab=<?= $key ?>" class="flex items-center gap-2 pb-3 px-1 border-b-2 <?= $tab_class ?> transition-all whitespace-nowrap">
-                                <span class="material-symbols-outlined text-[20px]"><?= $tab['icon'] ?></span>
-                                <span><?= $tab['label'] ?></span>
-                                <span class="px-2 py-0.5 text-xs rounded-full bg-primary/20 text-primary dark:bg-primary/50 dark:text-text-main-dark font-bold"><?= $count ?></span>
-                            </a>
-                        <?php endforeach; ?>
                     </div>
                 </div>
 
@@ -190,42 +171,39 @@ if (
                                 <th scope="col" class="px-6 py-3 text-center text-xs font-bold text-text-sec-light dark:text-text-sec-dark uppercase tracking-wider">
                                     Participants
                                 </th>
-                                
-                                
+
+
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-border-light dark:divide-border-dark">
 
-                            <?php if (empty($current_reservations)): ?>
+                            <?php if (empty($array_participants)): ?>
                                 <tr>
                                     <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-sm text-text-sec-light dark:text-text-sec-dark">
-                                        Aucune réservation dans cette catégorie (<?= $tabs[$active_tab]['label'] ?>).
+                                        Aucune réservation dans cette catégorie (<?= "jjj" ?>).
                                     </td>
                                 </tr>
                             <?php else: ?>
 
-                                <?php foreach ($array_participants as $reservation) : ?>
+                                <?php foreach ($array_participants as $participant) : ?>
                                     <tr class="hover:bg-background-light dark:hover:bg-white/5 transition-colors">
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-text-main-light dark:text-text-main-dark"><?= htmlspecialchars($reservation['visitor_name']) ?></div>
-                                            <div class="text-xs text-text-sec-light dark:text-text-sec-dark">Réf: <?= htmlspecialchars($reservation['ref']) ?></div>
+                                            <div class="text-sm font-medium text-text-main-light dark:text-text-main-dark"><?= htmlspecialchars($participant['nom_utilisateur']) ?></div>
+                                            <div class="text-xs text-text-sec-light dark:text-text-sec-dark">Réf:Visite- <?= htmlspecialchars($participant['id_visite']) ?></div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-text-main-light dark:text-text-main-dark line-clamp-1"><?= htmlspecialchars($reservation['tour_title']) ?></div>
+                                            <div class="text-sm text-text-main-light dark:text-text-main-dark line-clamp-1"><?= htmlspecialchars($participant['titre_visite']) ?></div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-text-main-light dark:text-text-main-dark"><?= (new DateTime($reservation['date']))->format('d M Y') ?></div>
-                                            <div class="text-xs text-text-sec-light dark:text-text-sec-dark"><?= htmlspecialchars($reservation['time']) ?></div>
+                                            <div class="text-sm text-text-main-light dark:text-text-main-dark"><?= (new DateTime($participant['dateheure_viste']))->format('d M Y') ?></div>
+                                            <div class="text-xs text-text-sec-light dark:text-text-sec-dark"><?= (new DateTime($participant['dateheure_viste']))->format('h : m')  ?></div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center">
-                                            <span class="text-sm font-bold"><?= htmlspecialchars($reservation['participants']) ?></span>
+                                            <span class="text-sm font-bold"><?= htmlspecialchars($participant['nb_personnes']) ?></span>
                                         </td>
-                                        
-                                        
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
-
                         </tbody>
                     </table>
                 </div>

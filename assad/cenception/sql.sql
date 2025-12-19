@@ -94,11 +94,11 @@ INSERT INTO habitats (nom_habitat, type_climat, description_habitat, zone_zoo) V
 ('Pôle Nord', 'Polaire', 'Zone glacée avec bassins d''eau froide.', 'Zone C');
 
 INSERT INTO animaux (nom_animal, espece, alimentation_animal, image_url, pays_origine, description_animal, id_habitat) VALUES
-('Simba', 'Lion d''Afrique', 'Carnivore', 'https://exemple.com/lion.jpg', 'Kenya', 'Le roi de la savane.', 1),
+('ASSAD', 'Lion d''Afrique', 'Carnivore', 'https://exemple.com/lion.jpg', 'Kenya', 'Le roi de la savane.', 1);
 ('Kaa', 'Python', 'Carnivore', 'https://exemple.com/python.jpg', 'Brésil', 'Grand serpent constricteur.', 2),
 ('Nanook', 'Ours Polaire', 'Carnivore', 'https://exemple.com/ours.jpg', 'Canada', 'Grand prédateur des glaces.', 3);
 
-UPDATE animaux SET image_url ="https://lh3.googleusercontent.com/aida-public/AB6AXuDhOo2vgmSKCtghxbM1wkQ836nE_VEodYny-oa3mt9ZCr-0eM6M4sq0FRahDpRHnj-663RckkSIEWmDrLBVhgTT-38j9Dl-pndbzUKChybETsjfYriuOLvudOlLNhMpWZyW1fXrvEJYGGuQgYMfU6k14CK40NjAIgHtvKc91yE9QaONWfrWMuD1tWn_tRl9k5eUsOGCkzggGNY--rMGijQLb0Hh6uH7IUKmHLdv8l6Rww0dG6FM3yduMA77Kdcemn28laAts06ZMO3w" WHERE id_animal =2;
+UPDATE animaux SET image_url ="https://lh3.googleusercontent.com/aida-public/AB6AXuDhOo2vgmSKCtghxbM1wkQ836nE_VEodYny-oa3mt9ZCr-0eM6M4sq0FRahDpRHnj-663RckkSIEWmDrLBVhgTT-38j9Dl-pndbzUKChybETsjfYriuOLvudOlLNhMpWZyW1fXrvEJYGGuQgYMfU6k14CK40NjAIgHtvKc91yE9QaONWfrWMuD1tWn_tRl9k5eUsOGCkzggGNY--rMGijQLb0Hh6uH7IUKmHLdv8l6Rww0dG6FM3yduMA77Kdcemn28laAts06ZMO3w" WHERE id_animal =4;
 INSERT INTO utilisateurs (nom_utilisateur, email, role, motpasse_hash, pays_utilisateur) VALUES
 ('Alice Admin', 'admin@zoo.com', 'admin', 'hash_admin_99', 'Belgique');
 INSERT INTO visitesguidees (titre_visite, description_visite, dateheure_viste, langue__visite, capacite_max__visite, duree__visite, prix__visite, id_guide) VALUES
@@ -111,14 +111,14 @@ INSERT INTO etapesvisite (titre_etape, description_etape, ordre_etape, id_visite
 ('La Grande Serre', 'Entrée dans le dôme tropical.', 1, 2);
 
 INSERT INTO reservations (id_visite, id_utilisateur, nb_personnes) VALUES
-(1, 3, 2),  
-(2, 3, 1);  
+(13, 3, 2),  
+(13, 3, 1);  
 
 INSERT INTO commentaires (id_visite, id_utilisateur, note, texte) VALUES
 (1, 3, 5, 'Une expérience incroyable, le guide était passionnant !'),
 (2, 3, 4, 'Très instructif, mais un peu court.');
 
-SELECT * FROM animaux a INNER JOIN habitats h on a.id_habitat= h.id_habitat and a.id_animal=1;
+SELECT * FROM animaux a INNER JOIN habitats h on a.id_habitat= h.id_habitat ;
 SELECT c.note FROM visitesguidees v  INNER JOIN commentaires c on c.id_visite= c.id_visite and v.id_guide =2;
 SELECT c.note, v.id_guide FROM visitesguidees v  INNER JOIN commentaires c on c.id_visite= c.id_visite and v.dateheure_viste;
 
@@ -128,3 +128,5 @@ UPDATE visitesguidees set dateheure_viste ="2025-06-20 20:00:00" WHERE id_visite
 SELECT * FROM visitesguidees where id_guide = 1;-- and dateheure_viste >= NOW() order by  dateheure_viste asc limit 1;
 
 SELECT  * FROM etapesvisite;
+
+ select * from  utilisateurs u inner join  reservations r on  r.id_utilisateur = u.id_utilisateur inner join  visitesguidees v on v.id_visite=r.id_visite ;  

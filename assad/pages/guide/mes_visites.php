@@ -138,7 +138,15 @@ while ($ligne = $resultat->fetch_assoc()) {
                                 <div>
                                     <div class="flex justify-between">
                                         <h4 class="text-xl font-bold text-primary"><?= htmlspecialchars($tour['titre_visite']) ?></h4>
-                                        <span class="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded-lg">Actif</span>
+                                        <?php
+                                        if ($tour['statut__visite'] == 0)
+
+                                            echo '<span class="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded-lg">Actif</span>';
+                                        else
+                                            echo '<span class="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded-lg">pas disponible</span>';
+
+                                        ?>
+
                                     </div>
                                     <p class="text-sm line-clamp-2 mt-1"><?= htmlspecialchars($tour['description_visite']) ?></p>
 

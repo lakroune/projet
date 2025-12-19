@@ -236,7 +236,7 @@
          </div>
 
          <div class="w-full max-w-[1200px] px-4 md:px-10 pb-20">
-             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
 
                  <?php foreach ($array_animaux as $index => $animal) : ?>
                      <?php
@@ -253,7 +253,7 @@
 
                      <?php if ($index === 0) :
                         ?>
-                         <div class="group relative flex flex-col bg-white rounded-2xl border-2 border-primary overflow-hidden hover:shadow-xl transition-all duration-300 col-span-1 sm:col-span-2 lg:col-span-2">
+                         <div class="group  relative flex flex-col bg-white rounded-2xl border-2 border-primary overflow-hidden hover:shadow-xl transition-all duration-300 col-span-1 sm:col-span-2 lg:col-span-2">
                              <div class="absolute top-4 left-4 z-10">
                                  <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-bold shadow-lg">
                                      <span class="material-symbols-outlined text-[16px]">stars</span>
@@ -284,9 +284,7 @@
                          <div class="group flex flex-col bg-white rounded-2xl border border-[#f3ede7] overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                              <a href="animal_detail.php?id=<?= htmlspecialchars($animal['id_animal']) ?>" class="h-48 overflow-hidden relative">
                                  <img alt="<?= htmlspecialchars($animal['nom_animal']) ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="<?= htmlspecialchars($animal['image_url']) ?>" />
-                                 <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-1.5 rounded-full shadow-sm text-gray-500">
-                                     <span class="material-symbols-outlined text-[18px]">favorite</span>
-                                 </div>
+                                  
                              </a>
                              <div class="p-4 flex flex-col flex-grow">
                                  <div class="flex items-start justify-between mb-2">

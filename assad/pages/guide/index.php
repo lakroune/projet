@@ -181,8 +181,8 @@ if (
                     <div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-md p-5 flex flex-col gap-2">
                         <span class="material-symbols-outlined text-primary text-3xl">event_upcoming</span>
                         <p class="text-sm text-text-sec-light dark:text-text-sec-dark font-medium">Prochaine Visite</p>
-                        <p class="text-xl font-extrabold tracking-tight text-primary"><?= date('d/m/y', strtotime($visite['dateheure_viste'])) ?></p>
-                        <p class="text-sm  font-extrabold tracking-tight text-primary"><?= "à  " . date('h:m', strtotime($visite['dateheure_viste'])) ?></p>
+                        <p class="text-xl font-extrabold tracking-tight text-primary"><?= date('d-m-Y', strtotime($visite['dateheure_viste'])) ?></p>
+                        <p class="text-sm  font-extrabold tracking-tight text-primary"><?= "à  " . date('H:i', strtotime($visite['dateheure_viste'])) ?></p>
                         <p class="text-sm font-semibold"><?= $visite["titre_visite"] ?></p>
                     </div>
 
